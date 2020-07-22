@@ -7,7 +7,7 @@ build an email using the SQS message and send it via SES.
 Make a copy of .env.example called .env and fill it in.
 
 ## Testing
-Currently, the only text file is email_test.go, this will test sending an email via SES.
+Currently, the only test file is email_test.go, this will test sending an email via SES.
 
 ## Deployment
 Run ./scripts/deploy.sh from the root of the project with the command line flag of either 'dev' or 'prod' to make a deployment.
