@@ -12,6 +12,8 @@ github.com/gofor-little/env v0.1.2 h1:j0rtFXDnxQlYG3rYiElt0xuSA2sLdkiE+3174Pal0q
 github.com/gofor-little/env v0.1.2/go.mod h1:OzY0/RU7dy1cPqFsNrgqZggBHs8WRKJS9Vtx799GUl8=
 github.com/gofor-little/log v0.2.0 h1:BuRFkyJsVchS6XErVl5tRl5iVsNwZUfJHCaONsxvZok=
 github.com/gofor-little/log v0.2.0/go.mod h1:M7kqw1Mhxp1CcsNQsepvwDJzVMxDkhzn7zugWQ+Nd30=
+github.com/gofor-little/rand v0.1.0 h1:h2wM53OPVKAufO4aCUPcj9VRfykl4ctdZjIqU5l+sIk=
+github.com/gofor-little/rand v0.1.0/go.mod h1:ctFfWqBhiZQCIgAI/ZvXxS1fHuU+xOKHCALll6OR++8=
 github.com/gofor-little/ts v0.1.0 h1:40dDLxNORHXzETnKmRhm7YrzU1p7S79sClFSJMAB4PQ=
 github.com/gofor-little/ts v0.1.0/go.mod h1:ZT8fzifgCAHMch+P88ViTj9Tgke/rHIDsl3LN7g/zFE=
 github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af/go.mod h1:Nht3zPeWKUH0NzdCt2Blrr5ys8VGpn0CEB0cQHVjt7k=

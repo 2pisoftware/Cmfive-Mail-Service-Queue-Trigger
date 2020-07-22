@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Deploys a zipped binary to a Lambda function. Will be either dev or prod based on the
+# command line argument. For example, ./deploy.sh dev or ./deploy.sh prod.
+
 # Build.
 echo "Starting build..."
 
