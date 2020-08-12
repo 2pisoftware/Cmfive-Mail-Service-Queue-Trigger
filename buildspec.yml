@@ -3,18 +3,14 @@ version: 0.2
 phases:
   install:
     commands:
-      echo "Downloading Go v${GO_VERSION}"
       wget --quiet https://golang.org/dl/go${GO_VERSION}.linux-amd64.tar.gz
-      echo "Extracting Go"
       sudo tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
-      echo "Setting 'go' environment variable"
       export PATH=$PATH:/usr/local/go/bin
   build:
     commands:
-      echo "Building Lambda binary"
       go build -o main cmd/popper/main.go
-      echo "Zipping Lambda binary"
       zip main.zip main > /dev/null
+      ls -la
 
 artifacts:
   files:
