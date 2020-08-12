@@ -1,4 +1,4 @@
-version 0.2
+version: 0.2
 
 phases:
   install:
@@ -9,4 +9,8 @@ phases:
   build:
     commands:
       go build -o main cmd/popper/main.go
-      zip dist/main.zip main > /dev/null
+      zip main.zip main > /dev/null
+
+artifacts:
+  files:
+    - main.zip
