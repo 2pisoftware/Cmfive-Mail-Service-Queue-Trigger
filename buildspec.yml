@@ -3,14 +3,14 @@ version: 0.2
 phases:
   install:
     commands:
-      wget --quiet https://golang.org/dl/go${GO_VERSION}.linux-amd64.tar.gz
-      sudo tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
-      export PATH=$PATH:/usr/local/go/bin
+      - wget --quiet https://golang.org/dl/go${GO_VERSION}.linux-amd64.tar.gz
+      - sudo tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
+      - export PATH=$PATH:/usr/local/go/bin
   build:
     commands:
-      go build -o main cmd/popper/main.go
-      zip main.zip main > /dev/null
-      ls -la
+      - go build -o main cmd/popper/main.go
+      - zip main.zip main > /dev/null
+      - ls -la
 
 artifacts:
   files:
