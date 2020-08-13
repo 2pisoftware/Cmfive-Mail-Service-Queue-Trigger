@@ -8,9 +8,7 @@ phases:
   build:
     commands:
       - go/bin/go build -o main cmd/popper/main.go
-      - zip main.zip main > /dev/null
-      - ls -la
 
 artifacts:
   files:
-    - main.zip
+    - main
