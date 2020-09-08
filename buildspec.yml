@@ -10,6 +10,5 @@ phases:
       - go/bin/go build -o main cmd/popper/main.go
 
 artifacts:
-  base-directory: "lambda"
   files:
     - main
