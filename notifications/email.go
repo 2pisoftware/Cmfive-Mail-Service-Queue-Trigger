@@ -58,6 +58,18 @@ func SendEmail(ctx context.Context, data *EmailData) (string, error) {
 		message.Attach(path)
 	}
 
+	// Remove any attachments on disc once we're done with them.
+	defer func() {
+		// Don't delete attachments when we're developing locally.
+		if os.Getenv("ENVIRONMENT") == "development" {
+			return
+		}
+
+		for _, a := range *data.Attachments {
+			_ = os.Remove(a.Path)
+		}
+	}()
+
 	// Write the email to a buffer.
 	var buf bytes.Buffer
 	_, err := message.WriteTo(&buf)

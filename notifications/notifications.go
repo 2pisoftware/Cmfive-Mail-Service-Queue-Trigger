@@ -18,7 +18,7 @@ var (
 // Initialize initializes this package by creating a new SES client and S3 downloader.
 func Initialize() error {
 	var sess *session.Session
-	environment := os.Getenv("GO_ENV")
+	environment := os.Getenv("ENVIRONMENT")
 	var err error
 
 	if environment == "development" || environment == "" {
