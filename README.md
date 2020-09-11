@@ -4,12 +4,22 @@ MailService Popper is the Lambda function that is triggered when the mail servic
 build an email using the SQS message and send it via SES.
 
 ## Setup
-Make a copy of .env.example called .env and fill it in.
+Ensure the following environment variables are set, usually with an .env file.
+
+* TEST_TO (comma separated emails)
+* TEST_CC (comma separated emails)
+* TEST_BCC (comma separated emails)
+* TEST_REPLY_TO (comma separated emails)
+* TEST_FROM (single email address)
+* TEST_SUBJECT
+
+* AWS_FROM_ARN
+* AWS_REGION
+* AWS_PROFILE
+* GO_ENV (development or production)
 
 ## Testing
 Currently, the only test file is email_test.go, this will test sending an email via SES.
 
 ## Deployment
-Run ./scripts/deploy.sh from the root of the project with the command line flag of either 'dev' or 'prod' to make a deployment.
-The Lambda function must be already created with the name 'MailService_Dev' or 'MailService_Prod' and have permission to upload
-Lambda function code via the AWS CLI.
+Deployment will happen automatically via CodePipeline that is managed via a [CDK stack](https://github.com/2pisoftware/Cmfive-Mail-Service-CDK).

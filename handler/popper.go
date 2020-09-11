@@ -1,4 +1,4 @@
-package popper
+package handler
 
 import (
 	"context"
@@ -6,14 +6,14 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/2pisoftware/mail-service-popper/notifications"
-
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/gofor-little/log"
+
+	"github.com/2pisoftware/mail-service-popper/notifications"
 )
 
-// HandlePop initializes the notifications package and calls the pop method for each sqsEvent.Record.
-func HandlePop(ctx context.Context, sqsEvent events.SQSEvent) error {
+// Handle initializes the notifications package and calls the pop method for each sqsEvent.Record.
+func Handle(ctx context.Context, sqsEvent events.SQSEvent) error {
 	// Create a new structured logger that writes to os.stdout.
 	log.Log = log.NewStandardLogger(os.Stdout, log.Fields{
 		"tag": "mailService",

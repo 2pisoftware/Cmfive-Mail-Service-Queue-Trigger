@@ -2,7 +2,8 @@ package notifications
 
 import (
 	"fmt"
-	"os"
+
+	"github.com/gofor-little/env"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -18,15 +19,14 @@ var (
 // Initialize initializes this package by creating a new SES client and S3 downloader.
 func Initialize() error {
 	var sess *session.Session
-	environment := os.Getenv("ENVIRONMENT")
 	var err error
 
-	if environment == "development" || environment == "" {
+	if env.Get("ENVIRONMENT", "production") == "development" {
 		sess, err = session.NewSessionWithOptions(session.Options{
 			Config: aws.Config{
-				Region: aws.String(os.Getenv("AWS_REGION")),
+				Region: aws.String(env.Get("AWS_REGION", "ap-southeast-2")),
 			},
-			Profile: os.Getenv("AWS_PROFILE"),
+			Profile: env.Get("AWS_PROFILE", "default"),
 		})
 	} else {
 		sess, err = session.NewSession()

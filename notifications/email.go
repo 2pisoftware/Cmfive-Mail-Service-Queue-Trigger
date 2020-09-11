@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/gofor-little/env"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/ses"
 	"gopkg.in/gomail.v2"
@@ -61,7 +63,7 @@ func SendEmail(ctx context.Context, data *EmailData) (string, error) {
 	// Remove any attachments on disc once we're done with them.
 	defer func() {
 		// Don't delete attachments when we're developing locally.
-		if os.Getenv("ENVIRONMENT") == "development" {
+		if env.Get("ENVIRONMENT", "development") == "development" {
 			return
 		}
 
@@ -80,7 +82,7 @@ func SendEmail(ctx context.Context, data *EmailData) (string, error) {
 	// Create and validate raw email input.
 	input := &ses.SendRawEmailInput{
 		Destinations: aws.StringSlice(destinations),
-		FromArn:      aws.String(os.Getenv("AWS_FROM_ARN")),
+		FromArn:      aws.String(env.Get("AWS_FROM_ARN", "")),
 		RawMessage: &ses.RawMessage{
 			Data: buf.Bytes(),
 		},

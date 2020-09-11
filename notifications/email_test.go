@@ -50,22 +50,22 @@ func TestSendEmail(t *testing.T) {
 	}
 
 	attachments := &[]notifications.Attachment{
-		//{
-		//	Type: notifications.AttachmentTypeLocal,
-		//	Path: "test-data/attachment.docx",
-		//},
-		//{
-		//	Type: notifications.AttachmentTypeLocal,
-		//	Path: "test-data/attachment.jpg",
-		//},
-		//{
-		//	Type: notifications.AttachmentTypeLocal,
-		//	Path: "test-data/attachment.pdf",
-		//},
-		//{
-		//	Type: notifications.AttachmentTypeLocal,
-		//	Path: "test-data/attachment.png",
-		//},
+		{
+			Type: notifications.AttachmentTypeLocal,
+			Path: "test-data/attachment.docx",
+		},
+		{
+			Type: notifications.AttachmentTypeLocal,
+			Path: "test-data/attachment.jpg",
+		},
+		{
+			Type: notifications.AttachmentTypeLocal,
+			Path: "test-data/attachment.pdf",
+		},
+		{
+			Type: notifications.AttachmentTypeLocal,
+			Path: "test-data/attachment.png",
+		},
 		{
 			Type: notifications.AttachmentTypeLocal,
 			Path: "test-data/attachment.txt",
