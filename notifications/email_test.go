@@ -9,7 +9,7 @@ import (
 
 	"github.com/gofor-little/env"
 
-	"github.com/2pisoftware/mail-service-popper/notifications"
+	"github.com/2pisoftware/Cmfive-Mail-Service-Queue-Trigger/notifications"
 )
 
 func TestSendEmail(t *testing.T) {

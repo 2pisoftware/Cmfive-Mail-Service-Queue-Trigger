@@ -7,10 +7,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/gofor-little/env"
-
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/ses"
+	"github.com/gofor-little/env"
 	"gopkg.in/gomail.v2"
 )
 

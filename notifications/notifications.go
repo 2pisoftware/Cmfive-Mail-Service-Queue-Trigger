@@ -3,12 +3,11 @@ package notifications
 import (
 	"fmt"
 
-	"github.com/gofor-little/env"
-
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/aws/aws-sdk-go/service/ses"
+	"github.com/gofor-little/env"
 )
 
 var (

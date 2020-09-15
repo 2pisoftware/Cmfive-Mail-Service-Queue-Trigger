@@ -9,24 +9,22 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/gofor-little/log"
 
-	"github.com/2pisoftware/mail-service-popper/notifications"
+	"github.com/2pisoftware/Cmfive-Mail-Service-Queue-Trigger/notifications"
 )
 
 // Handle initializes the notifications package and calls the pop method for each sqsEvent.Record.
 func Handle(ctx context.Context, sqsEvent events.SQSEvent) error {
 	// Create a new structured logger that writes to os.stdout.
 	log.Log = log.NewStandardLogger(os.Stdout, log.Fields{
-		"tag": "mailService",
+		"tag": "MailService",
 	})
 
 	// Initialize the notifications package. Return an error if
 	// this fails because we don't want it to be removed from SQS.
 	if err := notifications.Initialize(); err != nil {
 		log.Error(log.Fields{
-			"error":   err.Error(),
-			"message": "failed to initialize notifications package",
+			"error":   fmt.Sprintf("failed to initialize notifications package: %v", err),
 		})
-
 		return fmt.Errorf("failed to initialize notifications package: %w", err)
 	}
 
@@ -36,16 +34,14 @@ func Handle(ctx context.Context, sqsEvent events.SQSEvent) error {
 		messageID, err := pop(ctx, r)
 		if err != nil {
 			log.Error(log.Fields{
-				"error":        err.Error(),
-				"message":      "failed to send email",
+				"error":        fmt.Sprintf("failed to send email: %v", err),
 				"sqsMessageID": r.MessageId,
 			})
 
 			// If there is an error attempt to report it.
 			if err := reportError(); err != nil {
 				log.Error(log.Fields{
-					"error":   err.Error(),
-					"message": "failed to report error",
+					"error":   fmt.Sprintf("failed to report error: %v", err),
 				})
 			}
 
