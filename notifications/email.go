@@ -81,7 +81,7 @@ func SendEmail(ctx context.Context, data *EmailData) (string, error) {
 	// Create and validate raw email input.
 	input := &ses.SendRawEmailInput{
 		Destinations: aws.StringSlice(destinations),
-		FromArn:      aws.String(env.Get("AWS_FROM_ARN", "")),
+		FromArn:      aws.String(data.FromARN),
 		RawMessage: &ses.RawMessage{
 			Data: buf.Bytes(),
 		},

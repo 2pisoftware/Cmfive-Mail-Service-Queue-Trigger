@@ -13,7 +13,7 @@ Ensure the following environment variables are set before running tests, usually
 * TEST_REPLY_TO (comma separated emails)
 * TEST_FROM (single email address)
 * TEST_SUBJECT
-* AWS_FROM_ARN
+* TEST_FROM_ARN
 * AWS_REGION
 * AWS_PROFILE
 * ENVIRONMENT (development or production)

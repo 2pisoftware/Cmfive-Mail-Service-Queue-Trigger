@@ -12,4 +12,5 @@ type EmailData struct {
 	Body        string        `json:"body"`
 	ContentType ContentType   `json:"content_type"`
 	Attachments *[]Attachment `json:"attachments,omitempty"`
+	FromARN     string        `json:"from_arn"`
 }
