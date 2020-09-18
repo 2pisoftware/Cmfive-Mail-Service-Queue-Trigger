@@ -23,27 +23,35 @@ func Handle(ctx context.Context, sqsEvent events.SQSEvent) error {
 	// this fails because we don't want it to be removed from SQS.
 	if err := notifications.Initialize(); err != nil {
 		log.Error(log.Fields{
-			"error":   fmt.Sprintf("failed to initialize notifications package: %v", err),
+			"error": fmt.Sprintf("failed to initialize notifications package: %v", err),
 		})
 		return fmt.Errorf("failed to initialize notifications package: %w", err)
 	}
 
 	// Range over the sqsEvent.Records.
 	for _, r := range sqsEvent.Records {
-		// Pop the record.
-		messageID, err := pop(ctx, r)
+		emailData, err := parse(r)
+		if err != nil {
+			log.Error(log.Fields{
+				"error":        fmt.Sprintf("failed to parse events.SQSMessage into notifications.EmailData: %v", err),
+				"sqsMessageID": r.MessageId,
+			})
+
+			continue
+		}
+
+		messageID, err := notifications.SendEmail(ctx, emailData)
 		if err != nil {
 			log.Error(log.Fields{
 				"error":        fmt.Sprintf("failed to send email: %v", err),
 				"sqsMessageID": r.MessageId,
+				"to":           emailData.To,
+				"cc":           *emailData.CC,
+				"bcc":          *emailData.BCC,
+				"replyTo":      *emailData.ReplyTo,
+				"from":         emailData.From,
+				"subject":      emailData.Subject,
 			})
-
-			// If there is an error attempt to report it.
-			if err := reportError(); err != nil {
-				log.Error(log.Fields{
-					"error":   fmt.Sprintf("failed to report error: %v", err),
-				})
-			}
 
 			continue
 		}
@@ -57,13 +65,11 @@ func Handle(ctx context.Context, sqsEvent events.SQSEvent) error {
 	return nil
 }
 
-// pop takes the events.SQSMessage, unmarshals it into a notifications.EmailData
-// structure and passes it to notifications.SendEmail.
-func pop(ctx context.Context, message events.SQSMessage) (string, error) {
-	// Unmarshal the message body into notifications.EmailData.
+// parse takes the events.SQSMessage, unmarshals it into an notifications.EmailData object.
+func parse(message events.SQSMessage) (*notifications.EmailData, error) {
 	emailData := &notifications.EmailData{}
 	if err := json.Unmarshal([]byte(message.Body), emailData); err != nil {
-		return "", fmt.Errorf("failed to unmashal message body: %w", err)
+		return nil, fmt.Errorf("failed to unmashal message body: %w", err)
 	}
 
 	// If we haven't been given a ContentType set a default.
@@ -71,17 +77,5 @@ func pop(ctx context.Context, message events.SQSMessage) (string, error) {
 		emailData.ContentType = notifications.ContentTypeTextHTML
 	}
 
-	// Send the email.
-	messageID, err := notifications.SendEmail(ctx, emailData)
-	if err != nil {
-		return "", fmt.Errorf("failed to send email: %w", err)
-	}
-
-	return messageID, nil
-}
-
-// reportError will send a message to an endpoint informing of the failure to send an email.
-func reportError() error {
-	// TODO: Implement in a future phase.
-	return nil
+	return emailData, nil
 }
