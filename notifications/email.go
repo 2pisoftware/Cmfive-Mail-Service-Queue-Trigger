@@ -6,11 +6,12 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/ses"
+	"github.com/go-mail/mail"
 	"github.com/gofor-little/env"
-	"gopkg.in/gomail.v2"
 )
 
 // ContentType is a string type alias for the different supported content types.
@@ -42,7 +43,7 @@ func SendEmail(ctx context.Context, data *EmailData) (string, error) {
 	}
 
 	// Set the headers and body.
-	message := gomail.NewMessage()
+	message := mail.NewMessage()
 	message.SetHeader("To", destinations...)
 	message.SetHeader("Reply-To", *data.ReplyTo...)
 	message.SetHeader("From", data.From)
@@ -51,12 +52,11 @@ func SendEmail(ctx context.Context, data *EmailData) (string, error) {
 
 	// Load and attach the Attachments.
 	for _, a := range *data.Attachments {
-		path, err := a.Load(ctx)
+		data, err := a.Load(ctx)
 		if err != nil {
 			return "", fmt.Errorf("failed to load Attachment: %w", err)
 		}
-
-		message.Attach(path)
+		message.AttachReader(filepath.Base(a.Path), bytes.NewReader(data))
 	}
 
 	// Remove any attachments on disc once we're done with them.
